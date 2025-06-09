@@ -93,3 +93,33 @@ select * from boats;
 | 105 | Voyager  | White  |
 +-----+----------+--------+
 5 rows in set (0.002 sec)
+
+
+
+MariaDB [gaurav_db]> INSERT INTO reserves VALUES (1001, 1, 101, '2025-06-01');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [gaurav_db]> INSERT INTO reserves VALUES (1002, 2, 102, '2025-06-02');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [gaurav_db]> INSERT INTO reserves VALUES (1003, 3, 103, '2025-06-03');
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [gaurav_db]> INSERT INTO reserves VALUES (1004, 4, 104, '2025-06-04');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [gaurav_db]> INSERT INTO reserves VALUES (1005, 5, 105, '2025-06-05');
+Query OK, 1 row affected (0.003 sec)
+
+
+ select * from reserves;
++------+------+------+------------+
+| rid  | sid  | bid  | day        |
++------+------+------+------------+
+| 1001 |    1 |  101 | 2025-06-01 |
+| 1002 |    2 |  102 | 2025-06-02 |
+| 1003 |    3 |  103 | 2025-06-03 |
+| 1004 |    4 |  104 | 2025-06-04 |
+| 1005 |    5 |  105 | 2025-06-05 |
++------+------+------+------------+
+5 rows in set (0.001 sec)
