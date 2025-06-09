@@ -111,8 +111,12 @@ Query OK, 1 row affected (0.003 sec)
 MariaDB [gaurav_db]> INSERT INTO reserves VALUES (1005, 5, 105, '2025-06-05');
 Query OK, 1 row affected (0.003 sec)
 
+INSERT INTO reserves VALUES (1006, 1, 102, '2025-06-06');
+INSERT INTO reserves VALUES (1007, 2, 103, '2025-06-07');
+INSERT INTO reserves VALUES (1008, 3, 101, '2025-06-08');
 
- select * from reserves;
+
+MariaDB [gaurav_db]> select * from reserves;
 +------+------+------+------------+
 | rid  | sid  | bid  | day        |
 +------+------+------+------------+
@@ -121,5 +125,7 @@ Query OK, 1 row affected (0.003 sec)
 | 1003 |    3 |  103 | 2025-06-03 |
 | 1004 |    4 |  104 | 2025-06-04 |
 | 1005 |    5 |  105 | 2025-06-05 |
+| 1006 |    1 |  102 | 2025-06-06 |
+| 1007 |    2 |  103 | 2025-06-07 |
+| 1008 |    3 |  101 | 2025-06-08 |
 +------+------+------+------------+
-5 rows in set (0.001 sec)
