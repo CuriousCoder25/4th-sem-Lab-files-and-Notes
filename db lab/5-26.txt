@@ -1,0 +1,18 @@
+--SELECT AND INNER JOIN--
+<qn1>
+select job_id, sum(salary) from employee group by job_id;
+
+select category, sum(salary) as total_sal from employee e inner join job j on e.job_id = j.job_id group by category;
+
+<QN2>
+select e_name, dept_name, salary as max_salary from employee where salary in (select max(salary) from employee group by dept_name);
+
+<QN3>
+select dept_name,count(*) as no_of_emp from employee group by dept_name;
+
+<QN4>
+select * from employee order by salary asc;
+
+<QN5>
+select * from employee where salary > 16000;
+select * from employee order by .......

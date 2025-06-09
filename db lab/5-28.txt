@@ -1,0 +1,397 @@
+LAB 6
+
+
+Employee(Emp_no, E_name, E_address, E_ph_no, Dept_no, Job_id, Salary)
+Department(Dept_no, Dept_name)
+
+INTIAL FUCKRY:
+
+create table department(
+dept_no int primary key,
+dept_name varchar(20)
+);
+
+create table employee(
+     E_no int primary key,
+     E_name Varchar(30),
+     E_address Varchar(40),
+     E_ph int,
+     dept_no int,
+     salary double,
+     FOREIGN KEY (dept_no) REFERENCES department(dept_no)
+     );
+
+
+
+ALter table employee add foreign key(dept_no) references department(dept_no);
+
+insert into department values(3,'BBA');
+insert into department values(2,'BE.COMP');
+insert into department values(1,'BCA');
+ select * from department;
+
+ insert into department values(4,'Bsc.CSIT');
+
+
+
+Section A: Set Operators
+1. List all unique department numbers from both Employee and Department
+tables.
+
+select dept_no from department union select dept_no from employee;
++---------+
+| dept_no |
++---------+
+|       1 |
+|       2 |
+|       3 |
+|       4 |
++---------+
+
+2. Find departments that are common in both Employee and Department tables.
+
+MariaDB [gaurav_db]> select dept_no from department intersect select dept_no from employee;
++---------+
+| dept_no |
++---------+
+|       1 |
+|       2 |
+|       3 |
++---------+
+3 rows in set
+
+3. List departments that are defined in the Department table but have no
+employees.
+
+
+select dept_no from department except select dept_no from employee;
++---------+
+| dept_no |
++---------+
+|       4 |
++---------+
+1 row in set (0.001 sec)
+
+
+
+Section B: Logical Operators
+
+1. Display employees who belong to department 101 and have salary greater
+than 20000.
+ select * from employee where salary>20000 AND dept_no=1;
++------+----------------+---------------------+------------+---------+--------+
+| E_no | E_name         | E_address           | E_ph       | dept_no | salary |
++------+----------------+---------------------+------------+---------+--------+
+|    2 | Sushila Kumari | Dhangadhi-4,Kailali | 2147483647 |       1 |  55000 |
++------+----------------+---------------------+------------+---------+--------+
+1 row in set (0.001 sec)
+
+2. Find employees who live in 'New York' or have a salary greater than 25000.
+
+ select * from employee where E_address='Tikapur-3, kailali' AND salary>25000;
++------+---------------+--------------------+------------+---------+--------+
+| E_no | E_name        | E_address          | E_ph       | dept_no | salary |
++------+---------------+--------------------+------------+---------+--------+
+|    8 | Nirajan Joshi | Tikapur-3, Kailali | 2147483647 |       3 |  63000 |
+|   20 | Deepak Rana   | Tikapur-3, Kailali | 2147483647 |       1 |  47000 |
+|   21 | Asmita Shah   | Tikapur-3, Kailali | 2147483647 |       3 |  51000 |
++------+---------------+--------------------+------------+---------+--------+
+3 rows in set (0.001 sec)
+
+
+3. List employees who do not work in department 102.
+
+
+select * from employee where dept_no!=2;
++------+-------------------+----------------------+------------+---------+--------+
+| E_no | E_name            | E_address            | E_ph       | dept_no | salary |
++------+-------------------+----------------------+------------+---------+--------+
+|    2 | Sushila Kumari    | Dhangadhi-4,Kailali  | 2147483647 |       1 |  55000 |
+|    3 | Gaurav Kathayat   | Dhangadhi-1,Kailali  | 2147483647 |       3 |  59000 |
+|    4 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       3 |  89000 |
+|    5 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       1 |  16000 |
+|    6 | Sushil saud       | Dhangadhi-1,Kailali  | 2147483647 |       1 |  16000 |
+|    7 | Ramesh Adhikari   | Lamki-5, Kailali     | 2147483647 |       1 |  48000 |
+|    8 | Nirajan Joshi     | Tikapur-3, Kailali   | 2147483647 |       3 |  63000 |
+|    9 | Pooja Chaudhary   | Hasuliya-2, Kailali  | 2147483647 |       1 |  51000 |
+|   11 | Bijaya Rana       | Bauniya-7, Kailali   | 2147483647 |       3 |  71000 |
+|   13 | Manoj Sarki       | Joshipur-3, Kailali  | 2147483647 |       1 |  45000 |
+|   15 | Kushal Dhami      | Chauraha-1, Kailali  | 2147483647 |       3 |  73000 |
+|   16 | Sita Joshi        | Dhangadhi-1, Kailali | 2147483647 |       1 |  52000 |
+|   18 | Prakash Chaudhary | Attariya-6, Kailali  | 2147483647 |       3 |  60000 |
+|   20 | Deepak Rana       | Tikapur-3, Kailali   | 2147483647 |       1 |  47000 |
+|   21 | Asmita Shah       | Tikapur-3, Kailali   | 2147483647 |       3 |  51000 |
+|   23 | Sushma Adhikari   | Dhangadhi-1, Kailali | 2147483647 |       3 |  69000 |
+|   24 | Ram Thapa         | Bauniya-7, Kailali   | 2147483647 |       1 |  48000 |
+|   25 | Kajal Kunwar      | Attariya-6, Kailali  | 2147483647 |       3 |  73000 |
++------+-------------------+----------------------+------------+---------+--------+
+18 rows in set (0.001 sec)
+
+
+Section C: Comparison Operators
+1. Find employees whose salary is exactly 20000.
+
+select * from employee where salary=20000;
++------+-----------------+----------------------+------------+---------+--------+
+| E_no | E_name          | E_address            | E_ph       | dept_no | salary |
++------+-----------------+----------------------+------------+---------+--------+
+|   26 | Manisha Thapa   | Janaki-2, Kailali    | 2147483647 |       1 |  20000 |
+|   27 | Rajan Joshi     | Dhangadhi-5, Kailali | 2147483647 |       2 |  20000 |
+|   28 | Kabita Shah     | Hasuliya-1, Kailali  | 2147483647 |       3 |  20000 |
+|   29 | Sunil Rana      | Attariya-3, Kailali  | 2147483647 |       2 |  20000 |
+|   30 | Aasha Dhami     | Chauraha-1, Kailali  | 2147483647 |       1 |  20000 |
+|   31 | Ravi Bhatta     | Tikapur-6, Kailali   | 2147483647 |       3 |  20000 |
+|   32 | Niruta Adhikari | Dhangadhi-9, Kailali | 2147483647 |       2 |  20000 |
+|   33 | Suraj Kunwar    | Masuriya-4, Kailali  | 2147483647 |       1 |  20000 |
+|   34 | Karuna Sarki    | Bauniya-7, Kailali   | 2147483647 |       3 |  20000 |
+|   35 | Lalit Chaudhary | Lamki-5, Kailali     | 2147483647 |       2 |  20000 |
++------+-----------------+----------------------+------------+---------+--------+
+10 rows in set (0.001 sec)
+
+2. Display employees whose salary is not equal to 18000.
+
+ select * from employee where salary!=18000;
++------+-------------------+----------------------+------------+---------+--------+
+| E_no | E_name            | E_address            | E_ph       | dept_no | salary |
++------+-------------------+----------------------+------------+---------+--------+
+|    1 | Hari Mohan        | Dhangadhi-09,Kailali | 2147483647 |       2 |  60000 |
+|    2 | Sushila Kumari    | Dhangadhi-4,Kailali  | 2147483647 |       1 |  55000 |
+|    3 | Gaurav Kathayat   | Dhangadhi-1,Kailali  | 2147483647 |       3 |  59000 |
+|    4 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       3 |  89000 |
+|    5 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       1 |  16000 |
+|    6 | Sushil saud       | Dhangadhi-1,Kailali  | 2147483647 |       1 |  16000 |
+|    7 | Ramesh Adhikari   | Lamki-5, Kailali     | 2147483647 |       1 |  48000 |
+|    8 | Nirajan Joshi     | Tikapur-3, Kailali   | 2147483647 |       3 |  63000 |
+|    9 | Pooja Chaudhary   | Hasuliya-2, Kailali  | 2147483647 |       1 |  51000 |
+|   10 | Sanjay Rawal      | Dhangadhi-6, Kailali | 2147483647 |       2 |  67000 |
+|   11 | Bijaya Rana       | Bauniya-7, Kailali   | 2147483647 |       3 |  71000 |
+|   12 | Kriti Singh       | Baliya-5, Kailali    | 2147483647 |       2 |  55000 |
+|   13 | Manoj Sarki       | Joshipur-3, Kailali  | 2147483647 |       1 |  45000 |
+|   14 | Laxmi Tharu       | Masuriya-4, Kailali  | 2147483647 |       2 |  69000 |
+|   15 | Kushal Dhami      | Chauraha-1, Kailali  | 2147483647 |       3 |  73000 |
+|   16 | Sita Joshi        | Dhangadhi-1, Kailali | 2147483647 |       1 |  52000 |
+|   17 | Bishal Bhatta     | Dhangadhi-1, Kailali | 2147483647 |       2 |  58000 |
+|   18 | Prakash Chaudhary | Attariya-6, Kailali  | 2147483647 |       3 |  60000 |
+|   19 | Rekha Singh       | Attariya-6, Kailali  | 2147483647 |       2 |  62000 |
+|   20 | Deepak Rana       | Tikapur-3, Kailali   | 2147483647 |       1 |  47000 |
+|   21 | Asmita Shah       | Tikapur-3, Kailali   | 2147483647 |       3 |  51000 |
+|   22 | Nabin Dhami       | Bauniya-7, Kailali   | 2147483647 |       2 |  56000 |
+|   23 | Sushma Adhikari   | Dhangadhi-1, Kailali | 2147483647 |       3 |  69000 |
+|   24 | Ram Thapa         | Bauniya-7, Kailali   | 2147483647 |       1 |  48000 |
+|   25 | Kajal Kunwar      | Attariya-6, Kailali  | 2147483647 |       3 |  73000 |
+|   26 | Manisha Thapa     | Janaki-2, Kailali    | 2147483647 |       1 |  20000 |
+|   27 | Rajan Joshi       | Dhangadhi-5, Kailali | 2147483647 |       2 |  20000 |
+|   28 | Kabita Shah       | Hasuliya-1, Kailali  | 2147483647 |       3 |  20000 |
+|   29 | Sunil Rana        | Attariya-3, Kailali  | 2147483647 |       2 |  20000 |
+|   30 | Aasha Dhami       | Chauraha-1, Kailali  | 2147483647 |       1 |  20000 |
+|   31 | Ravi Bhatta       | Tikapur-6, Kailali   | 2147483647 |       3 |  20000 |
+|   32 | Niruta Adhikari   | Dhangadhi-9, Kailali | 2147483647 |       2 |  20000 |
+|   33 | Suraj Kunwar      | Masuriya-4, Kailali  | 2147483647 |       1 |  20000 |
+|   34 | Karuna Sarki      | Bauniya-7, Kailali   | 2147483647 |       3 |  20000 |
+|   35 | Lalit Chaudhary   | Lamki-5, Kailali     | 2147483647 |       2 |  20000 |
++------+-------------------+----------------------+------------+---------+--------+
+35 rows in set (0.001 sec)
+
+3. List employees whose salary is greater than or equal to 15000.
+
+
+select * from employee where salary>15000 OR salary=15000;
++------+-------------------+----------------------+------------+---------+--------+
+| E_no | E_name            | E_address            | E_ph       | dept_no | salary |
++------+-------------------+----------------------+------------+---------+--------+
+|    1 | Hari Mohan        | Dhangadhi-09,Kailali | 2147483647 |       2 |  60000 |
+|    2 | Sushila Kumari    | Dhangadhi-4,Kailali  | 2147483647 |       1 |  55000 |
+|    3 | Gaurav Kathayat   | Dhangadhi-1,Kailali  | 2147483647 |       3 |  59000 |
+|    4 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       3 |  89000 |
+|    5 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       1 |  16000 |
+|    6 | Sushil saud       | Dhangadhi-1,Kailali  | 2147483647 |       1 |  16000 |
+|    7 | Ramesh Adhikari   | Lamki-5, Kailali     | 2147483647 |       1 |  48000 |
+|    8 | Nirajan Joshi     | Tikapur-3, Kailali   | 2147483647 |       3 |  63000 |
+|    9 | Pooja Chaudhary   | Hasuliya-2, Kailali  | 2147483647 |       1 |  51000 |
+|   10 | Sanjay Rawal      | Dhangadhi-6, Kailali | 2147483647 |       2 |  67000 |
+|   11 | Bijaya Rana       | Bauniya-7, Kailali   | 2147483647 |       3 |  71000 |
+|   12 | Kriti Singh       | Baliya-5, Kailali    | 2147483647 |       2 |  55000 |
+|   13 | Manoj Sarki       | Joshipur-3, Kailali  | 2147483647 |       1 |  45000 |
+|   14 | Laxmi Tharu       | Masuriya-4, Kailali  | 2147483647 |       2 |  69000 |
+|   15 | Kushal Dhami      | Chauraha-1, Kailali  | 2147483647 |       3 |  73000 |
+|   16 | Sita Joshi        | Dhangadhi-1, Kailali | 2147483647 |       1 |  52000 |
+|   17 | Bishal Bhatta     | Dhangadhi-1, Kailali | 2147483647 |       2 |  58000 |
+|   18 | Prakash Chaudhary | Attariya-6, Kailali  | 2147483647 |       3 |  60000 |
+|   19 | Rekha Singh       | Attariya-6, Kailali  | 2147483647 |       2 |  62000 |
+|   20 | Deepak Rana       | Tikapur-3, Kailali   | 2147483647 |       1 |  47000 |
+|   21 | Asmita Shah       | Tikapur-3, Kailali   | 2147483647 |       3 |  51000 |
+|   22 | Nabin Dhami       | Bauniya-7, Kailali   | 2147483647 |       2 |  56000 |
+|   23 | Sushma Adhikari   | Dhangadhi-1, Kailali | 2147483647 |       3 |  69000 |
+|   24 | Ram Thapa         | Bauniya-7, Kailali   | 2147483647 |       1 |  48000 |
+|   25 | Kajal Kunwar      | Attariya-6, Kailali  | 2147483647 |       3 |  73000 |
+|   26 | Manisha Thapa     | Janaki-2, Kailali    | 2147483647 |       1 |  20000 |
+|   27 | Rajan Joshi       | Dhangadhi-5, Kailali | 2147483647 |       2 |  20000 |
+|   28 | Kabita Shah       | Hasuliya-1, Kailali  | 2147483647 |       3 |  20000 |
+|   29 | Sunil Rana        | Attariya-3, Kailali  | 2147483647 |       2 |  20000 |
+|   30 | Aasha Dhami       | Chauraha-1, Kailali  | 2147483647 |       1 |  20000 |
+|   31 | Ravi Bhatta       | Tikapur-6, Kailali   | 2147483647 |       3 |  20000 |
+|   32 | Niruta Adhikari   | Dhangadhi-9, Kailali | 2147483647 |       2 |  20000 |
+|   33 | Suraj Kunwar      | Masuriya-4, Kailali  | 2147483647 |       1 |  20000 |
+|   34 | Karuna Sarki      | Bauniya-7, Kailali   | 2147483647 |       3 |  20000 |
+|   35 | Lalit Chaudhary   | Lamki-5, Kailali     | 2147483647 |       2 |  20000 |
++------+-------------------+----------------------+------------+---------+--------+
+35 rows in set (0.001 sec)
+
+
+Section D: Special Operators
+1. List employees working in departments 101, 102, or 103 using IN.
+
+select * from employee where dept_no in (2,4);
++------+-----------------+----------------------+------------+---------+--------+
+| E_no | E_name          | E_address            | E_ph       | dept_no | salary |
++------+-----------------+----------------------+------------+---------+--------+
+|    1 | Hari Mohan      | Dhangadhi-09,Kailali | 2147483647 |       2 |  60000 |
+|   10 | Sanjay Rawal    | Dhangadhi-6, Kailali | 2147483647 |       2 |  67000 |
+|   12 | Kriti Singh     | Baliya-5, Kailali    | 2147483647 |       2 |  55000 |
+|   14 | Laxmi Tharu     | Masuriya-4, Kailali  | 2147483647 |       2 |  69000 |
+|   17 | Bishal Bhatta   | Dhangadhi-1, Kailali | 2147483647 |       2 |  58000 |
+|   19 | Rekha Singh     | Attariya-6, Kailali  | 2147483647 |       2 |  62000 |
+|   22 | Nabin Dhami     | Bauniya-7, Kailali   | 2147483647 |       2 |  56000 |
+|   27 | Rajan Joshi     | Dhangadhi-5, Kailali | 2147483647 |       2 |  20000 |
+|   29 | Sunil Rana      | Attariya-3, Kailali  | 2147483647 |       2 |  20000 |
+|   32 | Niruta Adhikari | Dhangadhi-9, Kailali | 2147483647 |       2 |  20000 |
+|   35 | Lalit Chaudhary | Lamki-5, Kailali     | 2147483647 |       2 |  20000 |
++------+-----------------+----------------------+------------+---------+--------+
+11 rows in set (0.001 sec)
+
+
+2. Display employees whose names start with the letter ‘S’ using LIKE.
+
+select * from employee where E_name like 'S%';
++------+-----------------+----------------------+------------+---------+--------+
+| E_no | E_name          | E_address            | E_ph       | dept_no | salary |
++------+-----------------+----------------------+------------+---------+--------+
+|    2 | Sushila Kumari  | Dhangadhi-4,Kailali  | 2147483647 |       1 |  55000 |
+|    6 | Sushil saud     | Dhangadhi-1,Kailali  | 2147483647 |       1 |  16000 |
+|   10 | Sanjay Rawal    | Dhangadhi-6, Kailali | 2147483647 |       2 |  67000 |
+|   16 | Sita Joshi      | Dhangadhi-1, Kailali | 2147483647 |       1 |  52000 |
+|   23 | Sushma Adhikari | Dhangadhi-1, Kailali | 2147483647 |       3 |  69000 |
+|   29 | Sunil Rana      | Attariya-3, Kailali  | 2147483647 |       2 |  20000 |
+|   33 | Suraj Kunwar    | Masuriya-4, Kailali  | 2147483647 |       1 |  20000 |
++------+-----------------+----------------------+------------+---------+--------+
+7 rows in set (0.001 sec)
+
+3. Show employees whose salary is between 15000 and 25000.
+
+ select * from employee where salary between 30000 AND 70000;
++------+-------------------+----------------------+------------+---------+--------+
+| E_no | E_name            | E_address            | E_ph       | dept_no | salary |
++------+-------------------+----------------------+------------+---------+--------+
+|    1 | Hari Mohan        | Dhangadhi-09,Kailali | 2147483647 |       2 |  60000 |
+|    2 | Sushila Kumari    | Dhangadhi-4,Kailali  | 2147483647 |       1 |  55000 |
+|    3 | Gaurav Kathayat   | Dhangadhi-1,Kailali  | 2147483647 |       3 |  59000 |
+|    7 | Ramesh Adhikari   | Lamki-5, Kailali     | 2147483647 |       1 |  48000 |
+|    8 | Nirajan Joshi     | Tikapur-3, Kailali   | 2147483647 |       3 |  63000 |
+|    9 | Pooja Chaudhary   | Hasuliya-2, Kailali  | 2147483647 |       1 |  51000 |
+|   10 | Sanjay Rawal      | Dhangadhi-6, Kailali | 2147483647 |       2 |  67000 |
+|   12 | Kriti Singh       | Baliya-5, Kailali    | 2147483647 |       2 |  55000 |
+|   13 | Manoj Sarki       | Joshipur-3, Kailali  | 2147483647 |       1 |  45000 |
+|   14 | Laxmi Tharu       | Masuriya-4, Kailali  | 2147483647 |       2 |  69000 |
+|   16 | Sita Joshi        | Dhangadhi-1, Kailali | 2147483647 |       1 |  52000 |
+|   17 | Bishal Bhatta     | Dhangadhi-1, Kailali | 2147483647 |       2 |  58000 |
+|   18 | Prakash Chaudhary | Attariya-6, Kailali  | 2147483647 |       3 |  60000 |
+|   19 | Rekha Singh       | Attariya-6, Kailali  | 2147483647 |       2 |  62000 |
+|   20 | Deepak Rana       | Tikapur-3, Kailali   | 2147483647 |       1 |  47000 |
+|   21 | Asmita Shah       | Tikapur-3, Kailali   | 2147483647 |       3 |  51000 |
+|   22 | Nabin Dhami       | Bauniya-7, Kailali   | 2147483647 |       2 |  56000 |
+|   23 | Sushma Adhikari   | Dhangadhi-1, Kailali | 2147483647 |       3 |  69000 |
+|   24 | Ram Thapa         | Bauniya-7, Kailali   | 2147483647 |       1 |  48000 |
++------+-------------------+----------------------+------------+---------+--------+
+19 rows in set (0.001 sec)
+
+
+4. Find employees with no phone number listed using IS NULL.
+
+
+
+select * from employee where E_ph IS NULL;
++------+------------------+----------------------+------+---------+--------+
+| E_no | E_name           | E_address            | E_ph | dept_no | salary |
++------+------------------+----------------------+------+---------+--------+
+|   36 | Bibek Thapa      | Lamki-6, Kailali     | NULL |       1 |  30000 |
+|   37 | Sarita Rana      | Dhangadhi-2, Kailali | NULL |       2 |  32000 |
+|   38 | Ashish Chaudhary | Tikapur-4, Kailali   | NULL |       3 |  28000 |
+|   39 | Bina Joshi       | Attariya-1, Kailali  | NULL |       1 |  26000 |
+|   40 | Gaurav Bhatta    | Hasuliya-3, Kailali  | NULL |       2 |  31000 |
++------+------------------+----------------------+------+---------+--------+
+5 rows in set (0.001 sec)
+
+
+
+
+
+5. List employees whose salary is greater than any employee in department
+102.
+
+select * from employee where salary > any (select salary from employee where dept_no = 1);
++------+-------------------+----------------------+------------+---------+--------+
+| E_no | E_name            | E_address            | E_ph       | dept_no | salary |
++------+-------------------+----------------------+------------+---------+--------+
+|    1 | Hari Mohan        | Dhangadhi-09,Kailali | 2147483647 |       2 |  60000 |
+|    2 | Sushila Kumari    | Dhangadhi-4,Kailali  | 2147483647 |       1 |  55000 |
+|    3 | Gaurav Kathayat   | Dhangadhi-1,Kailali  | 2147483647 |       3 |  59000 |
+|    4 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       3 |  89000 |
+|    7 | Ramesh Adhikari   | Lamki-5, Kailali     | 2147483647 |       1 |  48000 |
+|    8 | Nirajan Joshi     | Tikapur-3, Kailali   | 2147483647 |       3 |  63000 |
+|    9 | Pooja Chaudhary   | Hasuliya-2, Kailali  | 2147483647 |       1 |  51000 |
+|   10 | Sanjay Rawal      | Dhangadhi-6, Kailali | 2147483647 |       2 |  67000 |
+|   11 | Bijaya Rana       | Bauniya-7, Kailali   | 2147483647 |       3 |  71000 |
+|   12 | Kriti Singh       | Baliya-5, Kailali    | 2147483647 |       2 |  55000 |
+|   13 | Manoj Sarki       | Joshipur-3, Kailali  | 2147483647 |       1 |  45000 |
+|   14 | Laxmi Tharu       | Masuriya-4, Kailali  | 2147483647 |       2 |  69000 |
+|   15 | Kushal Dhami      | Chauraha-1, Kailali  | 2147483647 |       3 |  73000 |
+|   16 | Sita Joshi        | Dhangadhi-1, Kailali | 2147483647 |       1 |  52000 |
+|   17 | Bishal Bhatta     | Dhangadhi-1, Kailali | 2147483647 |       2 |  58000 |
+|   18 | Prakash Chaudhary | Attariya-6, Kailali  | 2147483647 |       3 |  60000 |
+|   19 | Rekha Singh       | Attariya-6, Kailali  | 2147483647 |       2 |  62000 |
+|   20 | Deepak Rana       | Tikapur-3, Kailali   | 2147483647 |       1 |  47000 |
+|   21 | Asmita Shah       | Tikapur-3, Kailali   | 2147483647 |       3 |  51000 |
+|   22 | Nabin Dhami       | Bauniya-7, Kailali   | 2147483647 |       2 |  56000 |
+|   23 | Sushma Adhikari   | Dhangadhi-1, Kailali | 2147483647 |       3 |  69000 |
+|   24 | Ram Thapa         | Bauniya-7, Kailali   | 2147483647 |       1 |  48000 |
+|   25 | Kajal Kunwar      | Attariya-6, Kailali  | 2147483647 |       3 |  73000 |
+|   26 | Manisha Thapa     | Janaki-2, Kailali    | 2147483647 |       1 |  20000 |
+|   27 | Rajan Joshi       | Dhangadhi-5, Kailali | 2147483647 |       2 |  20000 |
+|   28 | Kabita Shah       | Hasuliya-1, Kailali  | 2147483647 |       3 |  20000 |
+|   29 | Sunil Rana        | Attariya-3, Kailali  | 2147483647 |       2 |  20000 |
+|   30 | Aasha Dhami       | Chauraha-1, Kailali  | 2147483647 |       1 |  20000 |
+|   31 | Ravi Bhatta       | Tikapur-6, Kailali   | 2147483647 |       3 |  20000 |
+|   32 | Niruta Adhikari   | Dhangadhi-9, Kailali | 2147483647 |       2 |  20000 |
+|   33 | Suraj Kunwar      | Masuriya-4, Kailali  | 2147483647 |       1 |  20000 |
+|   34 | Karuna Sarki      | Bauniya-7, Kailali   | 2147483647 |       3 |  20000 |
+|   35 | Lalit Chaudhary   | Lamki-5, Kailali     | 2147483647 |       2 |  20000 |
++------+-------------------+----------------------+------------+---------+--------+
+33 rows in set (0.002 sec)
+
+
+
+
+6. Display employees whose salary is greater than all employees in department
+103.
+
+
+select * from employee where salary > all (select salary from employee where dept_no = 1);
++------+-------------------+----------------------+------------+---------+--------+
+| E_no | E_name            | E_address            | E_ph       | dept_no | salary |
++------+-------------------+----------------------+------------+---------+--------+
+|    1 | Hari Mohan        | Dhangadhi-09,Kailali | 2147483647 |       2 |  60000 |
+|    3 | Gaurav Kathayat   | Dhangadhi-1,Kailali  | 2147483647 |       3 |  59000 |
+|    4 | Gaurav bhatta     | Dhangadhi-1,Kailali  | 2147483647 |       3 |  89000 |
+|    8 | Nirajan Joshi     | Tikapur-3, Kailali   | 2147483647 |       3 |  63000 |
+|   10 | Sanjay Rawal      | Dhangadhi-6, Kailali | 2147483647 |       2 |  67000 |
+|   11 | Bijaya Rana       | Bauniya-7, Kailali   | 2147483647 |       3 |  71000 |
+|   14 | Laxmi Tharu       | Masuriya-4, Kailali  | 2147483647 |       2 |  69000 |
+|   15 | Kushal Dhami      | Chauraha-1, Kailali  | 2147483647 |       3 |  73000 |
+|   17 | Bishal Bhatta     | Dhangadhi-1, Kailali | 2147483647 |       2 |  58000 |
+|   18 | Prakash Chaudhary | Attariya-6, Kailali  | 2147483647 |       3 |  60000 |
+|   19 | Rekha Singh       | Attariya-6, Kailali  | 2147483647 |       2 |  62000 |
+|   22 | Nabin Dhami       | Bauniya-7, Kailali   | 2147483647 |       2 |  56000 |
+|   23 | Sushma Adhikari   | Dhangadhi-1, Kailali | 2147483647 |       3 |  69000 |
+|   25 | Kajal Kunwar      | Attariya-6, Kailali  | 2147483647 |       3 |  73000 |
++------+-------------------+----------------------+------------+---------+--------+
+14 rows in set (0.002 sec)

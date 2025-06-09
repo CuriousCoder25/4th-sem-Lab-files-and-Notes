@@ -1,0 +1,42 @@
+DML(Data Manipulation Language)
+--------------------------------
+1. Insert
+----------
+syntax:
+	insert into table_name values(val1,val2,..valN);
+		OR
+	insert into table_name(col1,col2..colN) 
+	values (val1,val2,..valN);
+Example:
+	insert into student values(1,'Ram',25);
+		OR
+	insert into student(roll,name,age) values(1,'Ram',25);
+2. Select
+-------------
+Syntax:
+	Select * from table_name; //display all records ,* means all column
+	Select col1,col2,..colN from table_name; // particular col data only
+	select * from table_name where condition; // condition matched data only
+Example:
+	select * from student;
+	select name,age from student;
+	select * from student where roll = 5;
+	select * from student where name = 'Ramesh';
+	select name,age from student where name = 'Ramesh';
+3.Update
+---------------
+Syntax:
+	update table_name set col1 = val1,col2 = val2 where condition;
+		OR
+	update table_name set col1 = val1,col2 = val2 ; //update all data
+Example;
+	update student set age = 26 where roll = 5;
+	update student set age = 24,name = 'Iris' where roll = 4;
+4. Delete
+-----------
+Syntax:
+	Delete from table_name; // delete all data
+	delete from table_name where condition; // matched data only
+example:
+	delete from student;
+	delete from student where age > 20;

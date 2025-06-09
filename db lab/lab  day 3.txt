@@ -1,0 +1,24 @@
+5/19
+
+
+1.Insert
+2.Select
+	Syntax:
+		Select * from table_name; //display all records 
+3.Update
+	Syntax:
+		update table_name set col1 = val1,col2 = val2 where condition;
+			OR
+		update table_name set col1 = val1, col2 = val2; //update all data
+Example;
+	update student set age = 26 where roll = 5 or roll = 4;
+	update student set age = 24, name = 'Iris' where roll = 4;
+
+4. Delete
+-----------
+Syntax:
+	Delete from table_name; // delete all data
+	Delete from table_name
+Example:
+	Delete from student;
+	
